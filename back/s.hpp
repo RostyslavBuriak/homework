@@ -6,11 +6,11 @@
 class server{
     public:
         server():serv_sock(0),client_sock(0),client_size(0){};
-        server(const server&) = default;
-        server(server&& ) = default;
+        server(const server&) = delete;
+        server(server&& ) = delete;
 
-        server& operator=(const server&) = default;
-        server& operator=(server&&) = default;
+        server& operator=(const server&) = delete;
+        server& operator=(server&&) = delete;
 
         ~server(){close(serv_sock);close(client_sock);}
 
