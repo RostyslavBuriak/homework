@@ -1,5 +1,8 @@
 #ifndef SERVER_CPP
 #define SERVER_CPP
+
+#include <string>
+
 class server{
     public:
         server():serv_sock(0),client_sock(0),client_size(0){};
@@ -8,6 +11,8 @@ class server{
 
         server& operator=(const server&) = default;
         server& operator=(server&&) = default;
+
+        ~server(){close(serv_sock);close(client_sock);}
 
         void start();
     private:
@@ -18,9 +23,7 @@ class server{
         const short port = 8080;
         int serv_sock,client_sock,client_size;
 
-        template<unsigned size>
-        void exec_command(char command[size]){ //executes cmd command
+        std::string exec_command(std::string&&); //executes cmd command
             
-        }
 };
 #endif
