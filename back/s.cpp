@@ -35,15 +35,16 @@ std::string server::exec_command(std::string && command){
     command[0] = '.'; //create correct command to run 
     command[1] = '/'; //script from local directory with "./" at the start
     FILE* pipe = popen(command.c_str(),"r");
-    if (!pipe) return "ERROR";
-        char buffer[128];
-        std::string result;
-        while(!feof(pipe)) {
-            if(fgets(buffer, 128, pipe) != NULL)
-            result += buffer;
-        }
+    if (!pipe) 
+        return "ERROR";
+    char buffer[128];
+    command.clear();
+    while(!feof(pipe)) {
+        if(fgets(buffer, 128, pipe) != NULL)
+        command += buffer;
+    }
     pclose(pipe);
-    return std::move(result);
+    return std::move(command);
 }
 
 
