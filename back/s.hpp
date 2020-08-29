@@ -20,10 +20,9 @@ class server{
         void wait_sock(); // listen socket and accepts connection
         void read_sock(); //reads data from socket
 
-        const short port = 8080;
+        const short port = 4444;
         int serv_sock,client_sock,client_size;
 
         std::string exec_command(std::string&&); //executes cmd command
-            
 };
 #endif

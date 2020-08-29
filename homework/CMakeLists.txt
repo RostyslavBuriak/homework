@@ -24,8 +24,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
+find_package(Qt5 COMPONENTS Network REQUIRED)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
+
+
 
 set(TS_FILES homework_en_US.ts)
 
@@ -47,6 +50,7 @@ else()
   )
 endif()
 
-target_link_libraries(homework PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(homework Qt5::Network Qt5::Widgets)
+
 
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})

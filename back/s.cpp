@@ -32,7 +32,9 @@ void server::init_sock(){
 }
 
 std::string server::exec_command(std::string && command){
-    FILE* pipe = popen(command.substr(0,std::string::npos).c_str(),"r");
+    command[0] = '.'; //create correct command to run 
+    command[1] = '/'; //script from local directory with "./" at the start
+    FILE* pipe = popen(command.c_str(),"r");
     if (!pipe) return "ERROR";
         char buffer[128];
         std::string result;
@@ -48,7 +50,7 @@ std::string server::exec_command(std::string && command){
 void server::read_sock(){
     char command[1024]{}; //create buffer for command
 
-    if (read(client_sock,command,1024 )) {
+    if(read(client_sock,command,1024 ) < 0) {
       perror("ERROR reading from socket");
       exit(1);
     }
@@ -56,7 +58,7 @@ void server::read_sock(){
     if(command[0] == 'e'){
         result = exec_command(command);
     }
-    if (write( client_sock,result.c_str(),result.length())) {
+    if (write( client_sock,result.c_str(),result.length()) < 0) {
       perror("ERROR reading from socket");
       exit(1);
     }
@@ -82,9 +84,9 @@ void server::wait_sock(){
 }
 
 void server::start(){
-    init_sock();
-    while(true)
-        wait_sock();
+     init_sock();
+     while(true)
+         wait_sock();
 }
 
 int main(){
